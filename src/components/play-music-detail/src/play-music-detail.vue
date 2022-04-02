@@ -347,6 +347,7 @@ defineExpose({
     .control-box {
       .info {
         padding: 0 40px;
+
         .song {
           display: flex;
           flex-direction: column;
