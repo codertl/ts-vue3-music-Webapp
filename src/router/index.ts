@@ -23,10 +23,7 @@ const router = createRouter({
 // 路由跳转前调用的钩子
 router.beforeEach((to, form, next) => {
   // 路由改变修改title
-  if (to.meta.title) {
-    document.title = to.meta.title ?? "音乐网站";
-    console.log(to.meta.title);
-  }
+  document.title = (to.meta.title as string) ?? "音乐网站";
   next(); // 进入目录如果不写就不会进入目录
 });
 export default router;
