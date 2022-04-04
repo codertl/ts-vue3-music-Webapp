@@ -3,7 +3,8 @@ export interface ISongList {
   type: number;
   name: string;
   copywriter: string;
-  picUrl: string;
+  picUrl?: string;
+  coverImgUrl?: string;
   canDislike: boolean;
   trackNumberUpdateTime: number;
   playCount: number;

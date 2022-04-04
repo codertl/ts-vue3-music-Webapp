@@ -7,6 +7,7 @@ import {
   Icon,
   Loading,
   Slider,
+  Sticky,
 } from "vant";
 const components = [
   Swipe,
@@ -16,6 +17,7 @@ const components = [
   Icon,
   Loading,
   Slider,
+  Sticky,
 ];
 
 export default function (app: App) {

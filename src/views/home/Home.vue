@@ -1,9 +1,12 @@
 <template>
   <div class="home">
     <!-- 头部导航栏-->
-    <div class="top-nav">
-      <top-nav @leftBtn="handleLeftBtn"></top-nav>
-    </div>
+    <van-sticky>
+      <div class="top-nav">
+        <top-nav @leftBtn="handleLeftBtn"></top-nav>
+      </div>
+    </van-sticky>
+
     <!-- 轮播图 -->
     <div class="banner">
       <swipe :banners="banners"></swipe>
@@ -13,7 +16,18 @@
       <icon-list :iconDataList="iconDataList"></icon-list>
     </div>
     <!-- 推荐 歌单 -->
-    <tl-card :songList="recommendPlayList"></tl-card>
+    <tl-card
+      :songList="recommendPlayList"
+      coverUrl="picUrl"
+      name="推荐歌单"
+    ></tl-card>
+
+    <!-- 华语歌单 -->
+    <tl-card
+      :songList="chinSongList"
+      coverUrl="coverImgUrl"
+      name="华语歌单"
+    ></tl-card>
   </div>
 </template>
 
@@ -42,7 +56,10 @@ const iconDataList = computed(() => {
 const recommendPlayList = computed(() => {
   return store.state.home.recommendPlayList;
 });
-
+// 获取精品华语歌单
+const chinSongList = computed(() => {
+  return store.state.home.chinSongList;
+});
 // 触发左侧按钮
 const handleLeftBtn = (e: any) => {
   console.log(e);

@@ -6,15 +6,21 @@
   </div>
 
   <div class="playlist-detail" v-show="!store.state.LOADING">
-    <top-nav :themeVars="themeVars" @left-btn="handleBacktrackBtn">
-      <template #left>
-        <van-icon name="arrow-left" />
-      </template>
-      <template #center> 推荐歌单 </template>
-      <template #right>
-        <van-icon name="search" />
-      </template>
-    </top-nav>
+    <van-sticky @change="handleFixed" z-index="1">
+      <top-nav
+        :themeVars="themeVars"
+        @left-btn="handleBacktrackBtn"
+        :class="{ active: isFixed }"
+      >
+        <template #left>
+          <van-icon name="arrow-left" />
+        </template>
+        <template #center> 推荐歌单 </template>
+        <template #right>
+          <van-icon name="search" />
+        </template>
+      </top-nav>
+    </van-sticky>
 
     <div class="detail-top" :style="imgUrl">
       <div class="cover-detail">
@@ -151,6 +157,13 @@ const handleBacktrackBtn = (e: any) => {
 const handleSong = (index: number) => {
   store.commit("playlist/changeSongCurrent", index);
 };
+
+// 头部导航吸顶时触发
+const isFixed = ref(false);
+const handleFixed = (bool: boolean) => {
+  isFixed.value = bool;
+  console.log(bool);
+};
 </script>
 
 <style lang="less" scoped>
@@ -184,6 +197,10 @@ const handleSong = (index: number) => {
     top: 0;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: saturate(180%) blur(70px);
+  }
+  ::v-deep(.active) {
+    background-color: #fff;
+    color: #000 !important;
   }
   ::v-deep(.van-hairline--bottom::after) {
     border: none;

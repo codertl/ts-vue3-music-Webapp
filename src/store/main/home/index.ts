@@ -6,6 +6,7 @@ import {
   getBannerData,
   getHomePageBallIconData,
   getRecommendPlayList,
+  getSongListHighquality,
 } from "@/service/main/index";
 const HomeModule: Module<IHomeStore, IRootState> = {
   namespaced: true,
@@ -13,6 +14,7 @@ const HomeModule: Module<IHomeStore, IRootState> = {
     bannners: [],
     iconList: [],
     recommendPlayList: [], // 推荐歌单
+    chinSongList: [],
   },
   mutations: {
     changeBannersData(state, list: any[]) {
@@ -23,6 +25,9 @@ const HomeModule: Module<IHomeStore, IRootState> = {
     },
     changeRecommendPlayListData(state, list: any[]) {
       state.recommendPlayList = list;
+    },
+    changeChinSongList(state, list: any[]) {
+      state.chinSongList = list;
     },
   },
   actions: {
@@ -43,6 +48,13 @@ const HomeModule: Module<IHomeStore, IRootState> = {
       if (recommendPlayListCode === 200) {
         commit("changeRecommendPlayListData", result);
       }
+      // 获取华语歌单
+      const { playlists } = await getSongListHighquality({
+        cat: "华语",
+        limit: 10,
+        before: "",
+      });
+      commit("changeChinSongList", playlists);
     },
   },
 };

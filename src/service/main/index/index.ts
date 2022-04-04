@@ -5,6 +5,7 @@ import {
   IBallIconType,
   IrecommendPlayType,
   IPlaylistDetailType,
+  ISongListHighquality,
 } from "./types";
 // 获取轮播图的请求,type:资源类型,对应以下类型,默认为 0 及pc
 // 1. android  2. iphone 3. ipad
@@ -26,7 +27,7 @@ export function getHomePageBallIconData() {
  * @param limit 是返回条数，默认6条
  * @returns
  */
-export function getRecommendPlayList(limit: number = 6) {
+export function getRecommendPlayList(limit: number = 10) {
   return tlRequest.get<IrecommendPlayType>({
     url: `/personalized?limit=${limit}`,
   });
@@ -78,5 +79,17 @@ export function getSongUrl(id: number) {
 export function getLyric(id: number) {
   return tlRequest.get<any>({
     url: `/lyric?id=${id}`,
+  });
+}
+
+/**
+ * 调用此接口,可获取精品歌单
+ * @param params 是object 参数 cat:标签 ，limit：取出歌单数量，before：分页参数,取上一页最后一个歌单的 updateTime 获取下一页数据
+ *
+ */
+export function getSongListHighquality(params: ISongListHighquality) {
+  const { cat, limit, before } = params;
+  return tlRequest.get<any>({
+    url: `/top/playlist/highquality?cat=${cat}&limit=${limit}&before=${before}`,
   });
 }

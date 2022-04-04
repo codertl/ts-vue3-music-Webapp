@@ -22,3 +22,9 @@ export interface IPlaylistDetailType {
   privileges: [];
   code: number;
 }
+// 精品歌单
+export interface ISongListHighquality {
+  cat: string;
+  limit: number | string;
+  before: number | string;
+}

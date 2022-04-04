@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="title p-15">
-      <div class="title-left">推荐歌单</div>
+      <div class="title-left">{{ name }}</div>
       <div class="title-right">
         更多
         <svg
@@ -22,14 +22,16 @@
       </div>
     </div>
     <div class="list">
-      <template v-for="song in songList" :key="song.id">
-        <div class="item" @click="handleSongList(song.id)">
-          <div class="cover-img">
-            <img :src="song.picUrl" :alt="song.name" />
+      <slot>
+        <template v-for="song in songList" :key="song.id">
+          <div class="item" @click="handleSongList(song.id)">
+            <div class="cover-img">
+              <img :src="song.picUrl ?? song.coverImgUrl" :alt="song.name" />
+            </div>
+            <div class="cover-name">{{ song.name }}</div>
           </div>
-          <div class="cover-name">{{ song.name }}</div>
-        </div>
-      </template>
+        </template>
+      </slot>
     </div>
   </div>
 </template>
@@ -41,6 +43,8 @@ import { useStore } from "@/store";
 
 const props = defineProps<{
   songList: ISongList[];
+  name: string;
+  coverUrl: string;
 }>();
 const store = useStore();
 const router = useRouter();

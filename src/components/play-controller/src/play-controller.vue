@@ -151,9 +151,17 @@ const handleDragCurrentTime = (currentTime: number) => {
       border-radius: 50%;
     }
     .title {
+      width: 460px;
+      height: 80px;
       margin-left: 15px;
       line-height: 80px;
       font-size: 28px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      .name {
+        white-space: nowrap;
+      }
       .creator {
         font-size: 20px;
         color: #7a7a7a;
