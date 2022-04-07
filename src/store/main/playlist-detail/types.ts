@@ -16,4 +16,7 @@ export interface IPlaylistStore {
   song: any[];
   songCurrent: number;
   lyric: string;
+  searchSongList: any[];
+  searchSingerList: any[];
+  searchPlaylist: any[];
 }

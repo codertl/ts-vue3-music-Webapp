@@ -7,6 +7,7 @@ import {
   getHomePageBallIconData,
   getRecommendPlayList,
   getSongListHighquality,
+  getAllTopList,
 } from "@/service/main/index";
 const HomeModule: Module<IHomeStore, IRootState> = {
   namespaced: true,
@@ -14,7 +15,8 @@ const HomeModule: Module<IHomeStore, IRootState> = {
     bannners: [],
     iconList: [],
     recommendPlayList: [], // 推荐歌单
-    chinSongList: [],
+    chinSongList: [], // 华语推荐
+    allTopList: [], // 所有榜单
   },
   mutations: {
     changeBannersData(state, list: any[]) {
@@ -28,6 +30,9 @@ const HomeModule: Module<IHomeStore, IRootState> = {
     },
     changeChinSongList(state, list: any[]) {
       state.chinSongList = list;
+    },
+    changeAllTopList(state, list: any[]) {
+      state.allTopList = list;
     },
   },
   actions: {
@@ -55,6 +60,10 @@ const HomeModule: Module<IHomeStore, IRootState> = {
         before: "",
       });
       commit("changeChinSongList", playlists);
+
+      // 获取所有榜单
+      const { list } = await getAllTopList();
+      commit("changeAllTopList", list);
     },
   },
 };

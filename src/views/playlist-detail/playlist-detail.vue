@@ -6,21 +6,15 @@
   </div>
 
   <div class="playlist-detail" v-show="!store.state.LOADING">
-    <van-sticky @change="handleFixed" z-index="1">
-      <top-nav
-        :themeVars="themeVars"
-        @left-btn="handleBacktrackBtn"
-        :class="{ active: isFixed }"
-      >
-        <template #left>
-          <van-icon name="arrow-left" />
-        </template>
-        <template #center> 推荐歌单 </template>
-        <template #right>
-          <van-icon name="search" />
-        </template>
-      </top-nav>
-    </van-sticky>
+    <top-nav :themeVars="themeVars" @left-btn="handleBacktrackBtn">
+      <template #left>
+        <van-icon name="arrow-left" />
+      </template>
+      <template #center> 推荐歌单 </template>
+      <template #right>
+        <van-icon name="search" />
+      </template>
+    </top-nav>
 
     <div class="detail-top" :style="imgUrl">
       <div class="cover-detail">
@@ -29,6 +23,14 @@
             :src="playList.playlistDetail.coverImgUrl + '?param=450y450'"
             alt=""
           />
+          <span class="playCount">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-bofang1-copy"></use>
+            </svg>
+            <span>{{
+              tranNumber(playList.playlistDetailDynamic.playCount)
+            }}</span>
+          </span>
         </div>
         <div class="info">
           <div class="title">
@@ -118,7 +120,8 @@ import { useRoute, useRouter } from "vue-router";
 // import { useStore } from "vuex";
 import { useStore } from "@/store";
 import TopNav from "@/components/top-nav";
-name: "playlist-detail";
+import { tranNumber } from "@/utils/tran-number";
+
 
 const route = useRoute();
 const router = useRouter();
@@ -156,13 +159,6 @@ const handleBacktrackBtn = (e: any) => {
 // 点击歌曲触发
 const handleSong = (index: number) => {
   store.commit("playlist/changeSongCurrent", index);
-};
-
-// 头部导航吸顶时触发
-const isFixed = ref(false);
-const handleFixed = (bool: boolean) => {
-  isFixed.value = bool;
-  console.log(bool);
 };
 </script>
 
@@ -221,10 +217,25 @@ const handleFixed = (bool: boolean) => {
     .cover {
       width: 240px;
       height: 240px;
+      position: relative;
       img {
         width: 240px;
         height: 240px;
         border-radius: 20px;
+      }
+      .playCount {
+        position: absolute;
+        top: 4%;
+        right: 5%;
+        padding: 6px 16px;
+        background-color: rgba(0, 0, 0, 0.3);
+        font-size: 20px;
+        color: #fff;
+        border-radius: 20px;
+        span {
+          padding-left: 5px;
+          transform: scale(0.8);
+        }
       }
     }
     .info {

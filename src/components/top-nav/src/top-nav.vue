@@ -7,7 +7,7 @@
         </svg>
       </slot>
     </div>
-    <div class="center">
+    <div class="center" :style="centerStyle" @click="centerBtn">
       <slot name="center">
         <div class="search">
           <div class="search_icon">
@@ -36,16 +36,26 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  themeVars?: Object;
-}>();
-const emit = defineEmits(["leftBtn", "rightBtn"]);
+const props = withDefaults(
+  defineProps<{
+    themeVars?: Object;
+    centerStyle?: object;
+  }>(),
+  {
+    centerStyle: () => ({}),
+  }
+);
+const emit = defineEmits(["leftBtn", "rightBtn", "centerBtn"]);
 
 // 左边按钮事件
 const leftBtn = (e: any) => {
   emit("leftBtn", e);
 };
 
+// 中间按钮点击
+const centerBtn = (e: any) => {
+  emit("centerBtn", e);
+};
 // 右边按钮事件
 const rightBtn = (e: any) => {
   emit("rightBtn", e);

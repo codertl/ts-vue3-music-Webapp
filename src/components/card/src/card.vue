@@ -2,7 +2,7 @@
   <div class="card">
     <div class="title p-15">
       <div class="title-left">{{ name }}</div>
-      <div class="title-right">
+      <div class="title-right" v-if="more">
         更多
         <svg
           t="1648020952742"
@@ -26,7 +26,20 @@
         <template v-for="song in songList" :key="song.id">
           <div class="item" @click="handleSongList(song.id)">
             <div class="cover-img">
-              <img :src="song.picUrl ?? song.coverImgUrl" :alt="song.name" />
+              <img
+                :src="
+                  song.picUrl
+                    ? song.picUrl + '?params=450y450'
+                    : song.coverImgUrl + '?params=450y450'
+                "
+                :alt="song.name"
+              />
+              <span class="playCount">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-bofang1-copy"></use>
+                </svg>
+                <span>{{ tranNumber(song.playCount) }}</span>
+              </span>
             </div>
             <div class="cover-name">{{ song.name }}</div>
           </div>
@@ -40,19 +53,26 @@
 import { useRouter } from "vue-router";
 import { ISongList } from "./type";
 import { useStore } from "@/store";
+import { tranNumber } from "@/utils/tran-number";
+const props = withDefaults(
+  defineProps<{
+    songList: ISongList[];
+    name: string;
+    coverUrl: string;
+    more?: boolean;
+  }>(),
+  {
+    more: true,
+  }
+);
 
-const props = defineProps<{
-  songList: ISongList[];
-  name: string;
-  coverUrl: string;
-}>();
 const store = useStore();
 const router = useRouter();
 // 点击某个歌单触发的事件
 const handleSongList = (id: number) => {
   // 实现路由跳转
   router.push({
-    name: "歌单详情",
+    name: "playlist-detail",
     params: {
       id,
     },
@@ -63,6 +83,7 @@ const handleSongList = (id: number) => {
 
 <style lang="less" scoped>
 .card {
+  margin-bottom: 10px;
   background-color: #f7f8fa;
   padding: 25px 0;
   border-bottom-left-radius: 25px;
@@ -91,23 +112,43 @@ const handleSongList = (id: number) => {
     .item {
       margin-right: 20px;
       .cover-img {
+        position: relative;
         width: 220px;
         height: 220px;
         img {
           width: 100%;
           border-radius: 15px;
         }
+        .playCount {
+          position: absolute;
+          top: 4%;
+          right: 4%;
+          // width: 90px;
+          height: 30px;
+          padding: 5px 10px;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 20px;
+          font-size: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          span {
+            transform: scale(0.8);
+          }
+        }
       }
       .cover-name {
         color: #7e7979;
         font-size: 20px;
         width: 220px;
-        height: 60px;
-        white-space: nowrap;
         /*溢出部分文字隐藏*/
         overflow: hidden;
         /*溢出部分省略号处理*/
         text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
     .item:first-child {

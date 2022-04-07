@@ -3,4 +3,5 @@ export interface IHomeStore<T = any> {
   iconList: any[];
   recommendPlayList: any[];
   chinSongList: any[];
+  allTopList: any[];
 }

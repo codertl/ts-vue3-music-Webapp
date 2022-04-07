@@ -3,15 +3,21 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "首页",
-    meta: { hidden: true, title: "首页" },
+    name: "index",
+    meta: { title: "首页" },
     component: () => import("../views/home/Home.vue"),
   },
   {
     path: "/playlist-detail/:id",
-    meta: { hidden: true, title: "歌单详情" },
-    name: "歌单详情",
+    meta: { title: "歌单详情" },
+    name: "playlist-detail",
     component: () => import("../views/playlist-detail/playlist-detail.vue"),
+  },
+  {
+    path: "/search",
+    meta: { title: "搜索" },
+    name: "search",
+    component: () => import("../views/search/search.vue"),
   },
 ];
 

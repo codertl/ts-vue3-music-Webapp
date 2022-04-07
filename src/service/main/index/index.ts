@@ -6,6 +6,7 @@ import {
   IrecommendPlayType,
   IPlaylistDetailType,
   ISongListHighquality,
+  ISearchType,
 } from "./types";
 // 获取轮播图的请求,type:资源类型,对应以下类型,默认为 0 及pc
 // 1. android  2. iphone 3. ipad
@@ -91,5 +92,38 @@ export function getSongListHighquality(params: ISongListHighquality) {
   const { cat, limit, before } = params;
   return tlRequest.get<any>({
     url: `/top/playlist/highquality?cat=${cat}&limit=${limit}&before=${before}`,
+  });
+}
+
+/**
+ * 所有榜单
+ */
+export function getAllTopList() {
+  return tlRequest.get<any>({
+    url: "/toplist",
+  });
+}
+
+/**
+ * 搜索请求
+ * @param params
+ * @returns
+ */
+export function getSearchList(params: ISearchType) {
+  const { keywords, limit, type } = params;
+  return tlRequest.get<any>({
+    url: `/cloudsearch?keywords=${keywords}&type=${type}&limit=${limit}`,
+  });
+}
+
+/**
+ * 获取歌曲详情
+ * 传入音乐 id(支持多个 id, 用 , 隔开), 可获得歌曲详情(dt为歌曲时长)
+ * @param ids
+ * @returns
+ */
+export function getSongDetail(ids: string) {
+  return tlRequest.get<any>({
+    url: `/song/detail?ids=${ids}`,
   });
 }

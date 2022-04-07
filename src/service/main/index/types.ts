@@ -28,3 +28,9 @@ export interface ISongListHighquality {
   limit: number | string;
   before: number | string;
 }
+
+export interface ISearchType {
+  keywords: string;
+  limit: number;
+  type: number;
+}

@@ -8,6 +8,11 @@ import {
   Loading,
   Slider,
   Sticky,
+  Button,
+  Search,
+  Tab,
+  Tabs,
+  Empty,
 } from "vant";
 const components = [
   Swipe,
@@ -18,6 +23,11 @@ const components = [
   Loading,
   Slider,
   Sticky,
+  Button,
+  Search,
+  Tab,
+  Tabs,
+  Empty,
 ];
 
 export default function (app: App) {
